@@ -4,6 +4,25 @@
 
 {% block content %}
 
-<h1>Test is working</h1>
+<form action="" method="post">
+    <h3  class="center">Sign Up</h3>
+    <div class="form-group form-text">
+        <label for="fullname" class="form-label">Full name</label>
+        <input type="text" id="fullname" name="fullname" required class="form-control" autocomplete="off" placeholder="Full name">
+
+        <label for="email" class="form-label">Email Address</label>
+        <input type="text" id="email" name="email" required class="form-control" autocomplete="off" placeholder="Email">
+
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" name="password" required class="form-control" autocomplete="off" placeholder="Password">
+
+        <label for="password" class="form-label">Re enter password</label>
+        <input type="password" id="repassword" name="repassword" required class="form-control" autocomplete="off" placeholder="Password">
+
+        <br>
+        <button type="submit" class="btn btn-primary mb-3 btn-dark">Confirm</button>
+    </div>
+</form>
+
 
 {% endblock %}
