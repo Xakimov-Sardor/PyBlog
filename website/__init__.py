@@ -17,7 +17,7 @@ def create_app():
 
     from .views import views
     from .auth import auth
-    from .models import User
+    from .models import User, Post
 
     with app.app_context():
         db.create_all()
