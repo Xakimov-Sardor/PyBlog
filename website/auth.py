@@ -25,6 +25,7 @@ def login():
 
                 login_user(user_login_with_email, remember=True)
                 print('loggin with email ok')
+                return redirect(url_for('views.home'))
 
             else:
                 flash('Incorrect password', category='error')
@@ -34,16 +35,17 @@ def login():
 
                 login_user(user_login_with_username, remember=True)
                 print('loggin with username ok')
+                return redirect(url_for('views.home'))
 
             else:
                 flash('Incorrect password', category='error')
         elif not user_login_with_email or not user_login_with_username:
-            return redirect(url_for('auth.signup'))
+            flash('There is no registered user with this name or email, you can signup')
         else:
             flash('Sorry, something error please try again', category='error')
             print('sorry')
 
-    return render_template('login.html')
+    return render_template('login.html', user=current_user)
 
 @auth.route('/logout')
 @login_required
@@ -98,4 +100,4 @@ def signup():
 
             return redirect(url_for('views.home'))
 
-    return render_template('signup.html')
+    return render_template('signup.html', user=current_user)
