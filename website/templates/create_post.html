@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+<title>{% block title %}Creating post by{% endblock title %}</title>
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<form action="" method="post">
+    <form action="" method="post">
+        <br>
+        <textarea name="text" id="text" cols="20" rows="6" class="form-control shadow"></textarea>
+        <br>
+
+        <button type="submit" class="btn btn-primary mb-3 btn-dark">Create</button>
+    </form>
+{% else %}
+<a href="/signup" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">Sign Up</a>
+<a href="login" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">Login</a>
+</form>
+{% endif %}
+
+{% endblock %}
