@@ -64,4 +64,4 @@ def user_posts(username):
         return redirect(url_for('views.home'))
     else:
         posts = target_user.posts
-        return render_template('profile.html', username=username, user_posts=posts, user=current_user)
+        return render_template('user_posts.html', username=username, user_posts=posts, user=current_user)
