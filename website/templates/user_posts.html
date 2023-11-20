@@ -1,15 +1,18 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 
-{% block title %}{{ username }}{% endblock title %}
+{% block title %}{{ username }} posts{% endblock title %}
+
+
+
 
 {% block content %}
 <br>
 <div class="text-center w-50 mx-auto">
-    <h1>{{ username }}'s posts</h1>
+    <h1>{{ username }} posts</h1>
 </div>
 {% for post in user_posts[::-1] %}
-    
-    <br>    
+
+    <br>
     <div class="post card mb-3 w-75 mx-auto">
         <div class="card-title card-header bg-dark text-white">
             <h1>{{ post.title[:50] }}</h1>
@@ -21,10 +24,11 @@
         <div class="card-footer">
             <h5>{{ post.date_created }}</h5>
             {% if post.author == user.id %}
-            <p><a href="/delete/{{ post.id }}" class="link-danger">Delete</a></p>
+            <p><a href="/delete/{{ post.id }}"
+class="link-danger">Delete</a></p>
             {% endif %}
         </div>
-        
+
     </div>
     <br>
 

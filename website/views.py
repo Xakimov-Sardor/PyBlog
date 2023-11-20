@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+﻿from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from .models import Post, db, User
 
@@ -22,9 +22,11 @@ def create_post():
 
 
         if len(title) < 25:
-            flash('Title should be at least 25 characters long', category='error')
+            flash('Title should be at least 25 characters long',
+category='error')
         elif len(text) < 25:
-            flash('Text, should be at least 100 characters long', category='error')
+            flash('Text, should be at least 100 characters long',
+category='error')
         else:
             new_post = Post(text=text, author=current_user.id, title=title)
             db.session.add(new_post)
@@ -50,13 +52,13 @@ def delete_post(id):
         db.session.delete(post)
         db.session.commit()
         flash('Post deleted', category='successful')
-    
+
     return redirect(url_for('views.home'))
 
 @views.route('/posts/<username>')
 @login_required
 def user_posts(username):
-    
+
     target_user = User.query.filter_by(username=username).first()
 
     if not target_user:
@@ -64,4 +66,7 @@ def user_posts(username):
         return redirect(url_for('views.home'))
     else:
         posts = target_user.posts
-        return render_template('user_posts.html', username=username, user_posts=posts, user=current_user)
+        if target_user.username == current_user.username:
+            username = 'My'
+        return render_template('user_posts.html', username=username,
+user_posts=posts, user=current_user)
