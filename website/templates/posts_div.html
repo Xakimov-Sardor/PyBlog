@@ -1,9 +1,0 @@
-
-{% block content %}
-{{ post.text }}
-
-<h1>{{ User.query.filter_by(id=post.author).first().username  }}</h1>
-<h1>{{ post.date_created }}</h1>
-
-
-{% endblock %}
