@@ -4,12 +4,11 @@
 
 {% block content %}
 <br>
+<div class="text-center w-50 mx-auto">
+    <h1>{{ username }}'s posts</h1>
+</div>
 {% for post in user_posts[::-1] %}
-    <div class="text-center w-50 mx-auto">
-        <h1>{{ username }}'s posts</h1>
-    </div>
     
-
     <br>    
     <div class="post card mb-3 w-75 mx-auto">
         <div class="card-title card-header bg-dark text-white">
