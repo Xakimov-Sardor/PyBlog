@@ -22,13 +22,11 @@ def create_post():
 
 
         if len(title) < 25:
-            flash('Title should be at least 25 characters long',
-category='error')
+            flash('Title should be at least 25 characters long',category='error')
         elif len(text) < 25:
-            flash('Text, should be at least 100 characters long',
-category='error')
+            flash('Text, should be at least 100 characters long',category='error')
         else:
-            new_post = Post(text=text, author=current_user.id, title=title)
+            new_post = Post(text=text, author_id=current_user.id, title=title)
             db.session.add(new_post)
             db.session.commit()
 
