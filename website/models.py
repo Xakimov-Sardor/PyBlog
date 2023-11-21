@@ -13,9 +13,6 @@ class User(db.Model, UserMixin):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)  #learn
-
     text = db.Column(db.Text, nullable=False) #nullable mean is if input is empty
-
     author = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
-
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
