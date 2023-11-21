@@ -12,14 +12,12 @@
         </div>
         <div class="card-body">
             <p>{{ post.text[:200] }}<p>
-            <a href="/posts/{{ post.usercha.username }}" class="btn btn-dark">{{
-post.usercha.username }}</a>
+            <a href="/posts/{{ post.usercha.username }}" class="btn btn-dark">{{post.usercha.username }}</a>
         </div>
         <div class="card-footer">
             <h5>{{ post.date_created }}</h5>
             {% if post.author == user.id %}
-            <p><a href="/delete/{{ post.id }}"
-class="link-danger">Delete</a></p>
+            <p><a href="/delete/{{ post.id }}" class="link-danger">Delete</a></p>
             {% endif %}
         </div>
 
