@@ -1,0 +1,57 @@
+{% extends  'base.html' %}
+
+{% block title %}post by {{ post.usercha.username }}{% endblock title %}
+
+{% block content %}
+<br>
+<div class="card">
+    <div class="card-header">
+        <h4 class="">{{ post.title }}</h4>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ post.text }}</p>
+    </div>
+    <div class="card-footer">
+        <h3>{{ post.date_created }}</h3>
+        <a class="card-title" href="/posts/{{ post.usercha.username }}">{{ post.usercha.username }}</a>
+    </div>
+</div>
+<br>
+<div class="card">
+    <form action="" method="post">
+        <div class="form-floating car-body">
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="text"></textarea>
+            <label for="floatingTextarea2">Comments</label>
+        </div>
+        <br>
+        <div class="col-auto">
+            <div class="card-body">
+                <button type="submit" class="btn btn-dark mb-3">Confirm</button>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+<div class="card">
+    <ul class="list-group list-group-flush">
+        {% for comment in post.comments[::-1] %}
+            <li class="list-group-item">
+                <div class="card">
+                    <div class="card-header">
+                        <p>by {{ comment.author }}</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ comment.text }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <p>{{ comment.date_created }}</p>
+                        {% if comment.author == user.username%}
+                        <a href="/delete-coment/{{comment.id}}" class="">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content%}
