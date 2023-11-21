@@ -1,6 +1,6 @@
 ﻿from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Post, db, User
+from .models import Post, db, User,Comment
 
 views = Blueprint('views', __name__)
 
@@ -44,7 +44,7 @@ def delete_post(id):
 
     if not post:
         flash('This post not exist', category='error')
-    elif post.author != current_user.id:
+    elif post.author_id != current_user.id:
         flash('You dont have permission for this post', category='error')
     else:
         db.session.delete(post)
@@ -66,5 +66,53 @@ def user_posts(username):
         posts = target_user.posts
         if target_user.username == current_user.username:
             username = 'My'
-        return render_template('user_posts.html', username=username,
-user_posts=posts, user=current_user)
+        return render_template('user_posts.html', username=username, user_posts=posts, user=current_user)
+
+@views.route('/post/<id>', methods=['POST', 'GET'])
+@login_required
+def post_detail_view(id):
+    post = Post.query.filter_by(id=id).first()
+
+    if not post:
+        flash('This post not exist', category='error')
+        return redirect(url_for('views.home'))
+    else:
+        if request.method == 'POST':
+            text = request.form.get('text')
+
+            if len(text) < 5:
+                flash('Comment must be', category='error')
+
+            else:
+                
+                new_comment = Comment(text=text, post_id=post.id, author=current_user.username)
+                db.session.add(new_comment)
+                db.session.commit()
+
+                flash('Comment created', category='successful')
+                return redirect(url_for('views.post_detail_view', id=id))
+        return render_template('post_detail.html', post=post, user=current_user)
+    
+# @views.route('/deleteit/<id>')
+# def ok(id):
+#     user = User.query.filter_by(id=id).delete()
+
+#     db.session.commit()
+
+#     return redirect(url_for('views.home'))
+
+
+@views.route('/delete-coment/<id>')
+def delete_coment(id):
+    comment = Comment.query.filter_by(id=id).first()
+
+    if not comment:
+        flash('Comment not exist', category='error')
+        return redirect(url_for('views.home'))
+    else:
+        db.session.delete(comment)
+        db.session.commit()
+
+        flash('Comment deleted', category='successful')
+
+        return redirect(url_for('views.post_detail_view', id=comment.post_id))
