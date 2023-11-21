@@ -16,3 +16,11 @@ class Post(db.Model):
     text = db.Column(db.Text, nullable=False) #nullable mean is if input is empty
     author_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False) #please find more information for this line
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    comments = db.relationship('Comment', backref='comentcha', passive_deletes=True)
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete='CASCADE'), nullable=False)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    author = db.Column(db.String)
