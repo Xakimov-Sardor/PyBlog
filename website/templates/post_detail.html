@@ -20,8 +20,8 @@
 <div class="card">
     <form action="" method="post">
         <div class="form-floating car-body">
-            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="text"></textarea>
-            <label for="floatingTextarea2">Comments</label>
+            <textarea class="form-control shadow" placeholder="Leave a comment here" id="floatingTextarea2" name="text"></textarea>
+            <label for="floatingTextarea2">Write coment</label>
         </div>
         <br>
         <div class="col-auto">
@@ -37,14 +37,14 @@
         {% for comment in post.comments[::-1] %}
             <li class="list-group-item">
                 <div class="card">
-                    <div class="card-header">
-                        <p>by {{ comment.author }}</p>
+                    <div class="card-header bg-dark">
+                        <p class="text-white">{{ comment.author }}</p>
                     </div>
                     <div class="card-body">
                         <p class="card-text">{{ comment.text }}</p>
                     </div>
                     <div class="card-footer">
-                        <p>{{ comment.date_created }}</p>
+                        <p>on {{ comment.date_created }}</p>
                         {% if comment.author == user.username%}
                         <a href="/delete-coment/{{comment.id}}" class="">Delete</a>
                         {% endif %}
