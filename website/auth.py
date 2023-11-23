@@ -66,7 +66,7 @@ def signup():
         repassword = data('repassword')
 
         # TEMPLATE_FOR_USERNAME = '^[a-z0-9_-]{3,15}$'
-        TEMPLATE_FOR_PASSWORD = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$'
+        # TEMPLATE_FOR_PASSWORD = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$'
         TEMPLATE_FOR_EMAIL = '[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+'
 
         user_email_exist = User.query.filter_by(email=email).first()
@@ -82,7 +82,7 @@ def signup():
         elif user_email_exist:
             flash('This email has already been registered', category='error')
             print('email error 2')
-        elif not re.match(TEMPLATE_FOR_PASSWORD, password):
+        elif not len(password) > 8:
             flash('The password is not secure enough', category='error')
             print('password error 1')
         elif password != repassword:
