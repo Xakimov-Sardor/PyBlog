@@ -1,10 +1,18 @@
 ﻿{% extends 'base.html' %}
 
 <title>{% block title %}My home{% endblock title %}</title>
-
 {% block content %}
 <br>
+{% set icon = "fa-regular fa-heart" %}
 {% for post in posts.query.all()[::-1] %}
+    
+    {% if like.query.filter_by(author_id=user.id, post_id=post.id).first() %}
+        {% set icon = 'fa-solid fa-heart' %}
+    {% else %}
+        {% set icon = "fa-regular fa-heart" %}
+
+    {% endif %}
+
     <br>
     <div class="post card mb-3 w-75 mx-auto">
         <div class="card-title card-header bg-dark text-white">
@@ -20,6 +28,11 @@
             <p><a href="/delete/{{ post.id }}" class="link-danger">Delete</a></p>
             {% endif %}
             <p><a href="/post/{{ post.id }}" class="link-info">View</a></p>
+            <a href="/like/{{ post.id }}" class="link-offset-2 link-underline link-underline-opacity-0 text-white">
+                <button class="btn btn-danger">
+                    <i class="{{ icon }}"></i> {{ post.likes|length }} Likes
+                </button>
+            </a>
         </div>
 
     </div>
