@@ -1,6 +1,6 @@
 ﻿from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Post, db, User,Comment
+from .models import Post, db, User, Comment, Like
 
 views = Blueprint('views', __name__)
 
@@ -10,7 +10,7 @@ views = Blueprint('views', __name__)
 @views.route('/')
 @login_required
 def home():
-    return render_template('home.html', user=current_user, posts=Post)
+    return render_template('home.html', user=current_user, posts=Post, like=Like)
 
 @views.route('/create', methods=['POST', 'GET'])
 def create_post():
@@ -116,3 +116,23 @@ def delete_coment(id):
         flash('Comment deleted', category='successful')
 
         return redirect(url_for('views.post_detail_view', id=comment.post_id))
+@views.route('/like/<post_id>')
+def like_post(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    if not post:
+        flash('Post does not exist', category='error')
+    else:
+        like = Like.query.filter_by(author_id=current_user.id, post_id=post.id).first()
+        if not like:
+            new_like = Like(author_id=current_user.id, post_id=post.id)
+            db.session.add(new_like)
+            db.session.commit()
+
+        else:
+            db.session.delete(like)
+            db.session.commit()
+
+        
+            
+
+    return redirect(url_for('views.home'))
